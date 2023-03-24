@@ -12,7 +12,9 @@ jobs:
       - name: Build
         run: docker build -t local .
       - name: Startup
-        run: docker run --name testing local python3 main.py && curl localhost
+        run: docker run -td --name testing local
+      - name: Get containers
+        run: docker ps
       - name: Run test
         run: docker exec testing curl localhost
 
