@@ -1,0 +1,25 @@
+name: Upload to dockerhub
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  Dockerhub:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Login to Dockerhub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKERHUB_USER }}
+          password: ${{ secrets.DOCKERHUB_PASSWORD }}
+
+      - name: Build and push
+        uses: docker/build-push-action@v4.0.0
+        with:
+          file: Dockerfile
+          context: .
+          tags: arturork/k8s-python-restapi
+          push: true
