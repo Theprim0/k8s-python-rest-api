@@ -2,7 +2,7 @@ name: Upload to dockerhub
 
 on:
   push:
-    branches: [ main ]
+    branches: [ master ]
 
 jobs:
   Dockerhub:
