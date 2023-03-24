@@ -1,6 +1,7 @@
 from flask import Flask, jsonify, make_response, request
 import datetime
 import socket
+import os
 
 app = Flask(__name__)
 
@@ -19,7 +20,13 @@ def hello_world():
     # Obtenemos el nombre del host
     nombrePc = socket.gethostname()
 
-    return make_response(jsonify(Hora=hora, IP=ip, Host=nombrePc), 200)
+    # Obtenemos el nombre del nodo
+    nombreNodo = os.getenv("MY_NODE_NAME")
+
+    if nombreNodo is None:
+        print("WARN: Variable MY_NODE_NAME not specified, default to null")
+        
+    return make_response(jsonify(Hora=hora, IP=ip, Host=nombrePc, Nodo=nombreNodo), 200)
 
 if __name__ == '__main__':
     app.run(debug=True,host='0.0.0.0', port=80)
